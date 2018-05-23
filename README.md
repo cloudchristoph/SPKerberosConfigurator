@@ -7,6 +7,7 @@
 - Checks for non-standard ports (other than 80 and 443) due to known issues with Kerberos
 - Also adds SPNs for other services like 
     - C2WTS (Claims to Windows Token Service)
+- Runs the created SPN configuration with provided Domain Admin credentials (optional)
 
 ## Usage
 
@@ -28,7 +29,7 @@ _not implemented yet_
 
 | Parameter                    | Type        | Description                                                 | Default          | Allowed Values                                |
 | ---------------------------- | ----------- | ----------------------------------------------------------- | ---------------- | --------------------------------------------- |
-| Step                         | ValidateSet | Tells the script which step to run                          | -                | TestSPConfig, TestSPNEntries, CreateSPNScript |
+| ~~Step~~                     | ValidateSet | Tells the script which step to run                          | -                | TestSPConfig, TestSPNEntries, CreateSPNScript |
 | FileName                     | String      | The name for the SPN script or CSV file                     | ConfigureSPN.ps1 |                                               |
 | IncludeCentralAdministration | Bool        | Will also create SPN entries for the Central Administration | $false           | $true, $false                                 |
 | OutputFormat                 | ValidateSet | Sets the desired output format                              | Script           | Script, CSV                                   |
@@ -58,5 +59,4 @@ I'll implement the following features in the future
     - [ ] PowerPivot
     - [ ] PerformancePoint Services
 - [ ] Creating an SPN for your App / Add-in domain
-- [ ] Running the created SPN configuration with provided Domain Admin credentials
 
