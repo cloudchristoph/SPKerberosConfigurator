@@ -92,7 +92,6 @@ function PromptYesNo {
 try {
 
     Add-PSSnapIn Microsoft.SharePoint.PowerShell
-    Import-Module ($PSScriptRoot + "\ActiveDirectorySPN.psm1")
 
     [System.Collections.ArrayList]$SpnCollection = @()
 
