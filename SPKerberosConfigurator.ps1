@@ -75,6 +75,20 @@ function FindSPN {
 
 }
 
+function PromptYesNo {
+    param(
+        [string]$Title,
+        [string]$Message
+    )
+
+    $yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "Yes"
+    $no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "No"
+    $options = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no)
+    $choice = $Host.ui.PromptForChoice($Title, $Message, $options, 1)
+
+    return ($choice -eq 0)
+}
+
 try {
 
     Add-PSSnapIn Microsoft.SharePoint.PowerShell
@@ -157,6 +171,14 @@ try {
         }
     } elseif ($OutputFormat -eq "CSV") {
         $SpnCollection | Export-Csv -Path $FileName -NoTypeInformation -Delimiter ";"
+    }
+
+    # Start Configuration script
+    if (PromptYesNo -Title "Run the created SPN configuration script?" -Message "You'll need Domain Admin or Enterprise Admin credentials to run this script.") {
+        write-host "Running script with new credentials..."
+        Start-Process powershell.exe -ArgumentList ("-file $FileName") -RunAs (Get-Credential -Message "Domain Admin or Enterprise Admin account")
+    } else {
+        write-host "Skipped script execution"
     }
 
 
