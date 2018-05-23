@@ -16,7 +16,13 @@ param(
 
     [Parameter()]
     [ValidateSet("Script", "CSV")]
-    $OutputFormat = "Script"
+    $OutputFormat = "Script",
+
+    # Will be added to fake SPNs to prevent collision with other SharePoint Farms in the domain
+    [Parameter()]
+    [string]
+    $SuffixForFakeSPNs = ""
+
 
 )
 
@@ -141,7 +147,7 @@ try {
     Get-SPServiceInstance | Where-Object { $_.TypeName -eq "Claims to Windows Token Service" } | ForEach-Object {
         if ($_.Status -ne "Disabled") {
             write-host "Found activated Claims to Windows Token Service, adding SPN..."
-            $SpnCollection.Add((CreateSpnEntry -ServiceClass "SP" -Hostname "C2WTS" -Username $_.Service.ProcessIdentity.Username));            
+            $SpnCollection.Add((CreateSpnEntry -ServiceClass "SP" -Hostname ("C2WTS" + $SuffixForFakeSPNs) -Username $_.Service.ProcessIdentity.Username));            
             return
         }
     }
@@ -153,7 +159,7 @@ try {
     Get-SPServiceInstance | Where-Object { $_.TypeName -eq "SQL Server Reporting Services Service" } | Select -Last 1 | ForEach-Object {
         write-host "Found installed Reporting Services, getting Service Application and adding SPN..."
         $sa = Get-SPRSServiceApplication        
-        $SpnCollection.Add((CreateSpnEntry -ServiceClass "SP" -Hostname "SSRS" -Username $sa.ApplicationPool.ProcessAccountName));
+        $SpnCollection.Add((CreateSpnEntry -ServiceClass "SP" -Hostname ("SSRS" + $SuffixForFakeSPNs) -Username $sa.ApplicationPool.ProcessAccountName));
     }
 
     # PowerPivot

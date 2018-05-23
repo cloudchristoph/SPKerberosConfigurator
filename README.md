@@ -28,13 +28,13 @@ _not implemented yet_
 
 ### Parameters
 
-| Parameter                    | Type        | Description                                                 | Default          | Allowed Values                                |
-| ---------------------------- | ----------- | ----------------------------------------------------------- | ---------------- | --------------------------------------------- |
-| ~~Step~~                     | ValidateSet | Tells the script which step to run                          | -                | TestSPConfig, TestSPNEntries, CreateSPNScript |
-| FileName                     | String      | The name for the SPN script or CSV file                     | ConfigureSPN.ps1 |                                               |
-| IncludeCentralAdministration | Bool        | Will also create SPN entries for the Central Administration | $false           | $true, $false                                 |
-| OutputFormat                 | ValidateSet | Sets the desired output format                              | Script           | Script, CSV                                   |
-
+| Parameter                    | Type        | Description                                                                               | Default          | Allowed Values                                |
+| ---------------------------- | ----------- | ----------------------------------------------------------------------------------------- | ---------------- | --------------------------------------------- |
+| ~~Step~~                     | ValidateSet | Tells the script which step to run                                                        | -                | TestSPConfig, TestSPNEntries, CreateSPNScript |
+| FileName                     | String      | The name for the SPN script or CSV file                                                   | ConfigureSPN.ps1 |                                               |
+| IncludeCentralAdministration | Bool        | Will also create SPN entries for the Central Administration                               | $false           | $true, $false                                 |
+| OutputFormat                 | ValidateSet | Sets the desired output format                                                            | Script           | Script, CSV                                   |
+| SuffixForFakeSPNs            | String      | Will be added to fake SPNs to prevent collision with other SharePoint Farms in the domain | (empty)          |                                               |
 
 ## Limitations and Known Issues
 
