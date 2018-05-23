@@ -140,6 +140,7 @@ try {
     # C2WTS
     Get-SPServiceInstance | Where-Object { $_.TypeName -eq "Claims to Windows Token Service" } | ForEach-Object {
         if ($_.Status -ne "Disabled") {
+            write-host "Found activated Claims to Windows Token Service, adding SPN..."
             $SpnCollection.Add((CreateSpnEntry -ServiceClass "SP" -Hostname "C2WTS" -Username $_.Service.ProcessIdentity.Username));            
             return
         }
@@ -149,6 +150,12 @@ try {
     if ($SharePointVersion -lt 16) {
     }
     # Reporting Services
+    Get-SPServiceInstance | Where-Object { $_.TypeName -eq "SQL Server Reporting Services Service" } | Select -Last 1 | ForEach-Object {
+        write-host "Found installed Reporting Services, getting Service Application and adding SPN..."
+        $sa = Get-SPRSServiceApplication        
+        $SpnCollection.Add((CreateSpnEntry -ServiceClass "SP" -Hostname "SSRS" -Username $sa.ApplicationPool.ProcessAccountName));
+    }
+
     # PowerPivot
     # PerformancePoint Services
 

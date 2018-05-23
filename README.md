@@ -7,6 +7,7 @@
 - Checks for non-standard ports (other than 80 and 443) due to known issues with Kerberos
 - Also adds SPNs for other services like 
     - C2WTS (Claims to Windows Token Service)
+    - Reporting Services
 - Runs the created SPN configuration with provided Domain Admin credentials (optional)
 
 ## Usage
@@ -55,7 +56,6 @@ I'll implement the following features in the future
 - [ ] Checking if neccessary Kerberos SPNs are correctly set or already registered
 - [ ] Adding SPNs for other services like 
     - [ ] Excel Services (only for SharePoint 2010 and SharePoint 2013 because it's integrated in Office Online Server for SharePoint 2016)
-    - [ ] Reporting Services
     - [ ] PowerPivot
     - [ ] PerformancePoint Services
 - [ ] Creating an SPN for your App / Add-in domain
